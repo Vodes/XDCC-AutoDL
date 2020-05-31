@@ -1,5 +1,5 @@
 # XDCC-AutoDL
-### It's basically untested currently
+### It's basically broken currently
 Automatically downloads xdcc files with selected criteria
 
 (Rizon IRC / #HorribleSubs Channel only for now, since its used for anime in my case)
