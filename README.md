@@ -8,7 +8,7 @@ Automatically downloads xdcc files with selected criteria
 - It uses the pip package [xdcc](https://pypi.org/project/xdcc/) so you'll need that and obviously python3
 
 ## Used Libraries:
-- [PircBotX (and it's dependencies)](https://github.com/pircbotx/pircbotx)
+- [PircBot](http://www.jibble.org/pircbot.php)
 - [Material-UI-Swing](https://github.com/vincenzopalazzo/material-ui-swing)
 - Apache Commons (Codec, io, lang3)
 
