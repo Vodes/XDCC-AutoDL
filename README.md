@@ -3,9 +3,8 @@
 Automatically downloads xdcc files with selected criteria
 
 ## Important Stuff:
-- Not working on Windows yet (will be in v1.3)
-- Not auto-reconnecting yet (will be in v1.3)
 - It uses the pip package [xdcc](https://pypi.org/project/xdcc/) so you'll need that and obviously python3
+- xdcc might not work on windows although it might just be my broken python install on windows 
 
 ## Used Libraries:
 - [PircBot](http://www.jibble.org/pircbot.php)
