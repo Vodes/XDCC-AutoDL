@@ -22,15 +22,9 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import org.apache.commons.lang3.StringUtils;
-
 import pw.vodes.xdccdl.XDCCDL;
 import pw.vodes.xdccdl.download.DownloadAble;
-import pw.vodes.xdccdl.irc.CustomBot;
-import pw.vodes.xdccdl.irc.ExpectedDcc;
-import pw.vodes.xdccdl.irc.IRCBot;
 import pw.vodes.xdccdl.server.Server;
-import pw.vodes.xdccdl.util.Sys;
 
 public class WindowMain {
 

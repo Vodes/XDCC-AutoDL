@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import pw.vodes.xdccdl.XDCCDL;
-import pw.vodes.xdccdl.irc.CustomBot;
 import pw.vodes.xdccdl.irc.IRCBot;
 import pw.vodes.xdccdl.irc.IrcStartThread;
 import pw.vodes.xdccdl.util.FileUtil;

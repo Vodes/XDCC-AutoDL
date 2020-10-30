@@ -16,17 +16,18 @@ public class CommandLineUtil {
 		if (getOS() == OS.Windows) {
 			commandList.add("cmd");
 			commandList.add("/c");
-			commandList.add("start");
+			commandList.add("\"" + commands.get(0) + "\"");
 		} else if (getOS() == OS.Linux) {
 			commandList.add("bash");
 			commandList.add("-c");
+			commandList.addAll(commands);
 		} else if (getOS() == OS.Mac) {
 			commandList.add("/bin/bash");
 			commandList.add("-c");
+			commandList.addAll(commands);
 		} else {
 			return;
 		}
-		commandList.addAll(commands);
 		ProcessBuilder processbuilder = new ProcessBuilder(commandList).directory(new File(XDCCDL.getInstance().optionManager.getString("Download-Path")));
 		Process p;
 		try {

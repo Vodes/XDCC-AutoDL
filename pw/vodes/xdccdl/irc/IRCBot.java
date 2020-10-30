@@ -129,7 +129,7 @@ public class IRCBot extends PircBot {
 		for (DownloadAble dla : XDCCDL.getInstance().dlaManager.getDownloadables()) {
 			if (dla.isEnabled()) {
 				String containment = containsAllNeededStrings(event.getMessage(), dla.getContainments().split(","));
-				if (containment == "") {
+				if (containment == "" && event.getUser().trim().equalsIgnoreCase(dla.getBot().trim())) {
 					return true;
 				}
 			}

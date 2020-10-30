@@ -8,8 +8,8 @@ import java.net.URL;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import pw.vodes.xdccdl.download.DownloadAbleManager;
-import pw.vodes.xdccdl.irc.DccThread;
 import pw.vodes.xdccdl.irc.IRCBot;
+import pw.vodes.xdccdl.irc.IrcCheckerThread;
 import pw.vodes.xdccdl.irc.IrcStartThread;
 import pw.vodes.xdccdl.option.OptionManager;
 import pw.vodes.xdccdl.option.types.OptionString;
@@ -37,9 +37,9 @@ public class XDCCDL {
 	public ServerManager serverManager;
 	public WindowMain window;
 	public CopyOnWriteArrayList<IRCBot> bots = new CopyOnWriteArrayList<>();
-	public DccThread dccT;
 	public InetAddress inet;
-	public final double version = 1.2;
+	public IrcCheckerThread ircCheck;
+	public final double version = 1.3;
 	
 	public void init() {
 		directory = new File(System.getProperty("user.home"), "Vodes" + File.separator + "XDCC-DL");
@@ -56,9 +56,8 @@ public class XDCCDL {
 		window = new WindowMain();
 		window.frmXdccautodl.setVisible(true);
 		window.frmXdccautodl.toFront();
-		dccT = new DccThread();
-		dccT.start();
 		VersionChecker.checkVersion();
+		
 		try {
 			inet = InetAddress.getByName(getIP());
 		} catch (Exception e) {
@@ -67,6 +66,9 @@ public class XDCCDL {
 		for(Server serv: serverManager.getServers()) {
 			new IrcStartThread(serv).start();
 		}
+		
+		ircCheck = new IrcCheckerThread();
+		ircCheck.start();
 	}
 	
 	private void addOptions() {
