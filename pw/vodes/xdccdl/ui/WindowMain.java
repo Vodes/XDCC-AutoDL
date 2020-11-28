@@ -21,6 +21,8 @@ import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import pw.vodes.xdccdl.XDCCDL;
 import pw.vodes.xdccdl.download.DownloadAble;
@@ -70,7 +72,7 @@ public class WindowMain {
 		frmXdccautodl = new JFrame();
 		frmXdccautodl.setTitle("XDCC-AutoDL v" + XDCCDL.getInstance().version);
 		frmXdccautodl.setResizable(false);
-		frmXdccautodl.setBounds(100, 100, 450, 522);
+		frmXdccautodl.setBounds(100, 100, 450, 550);
 		frmXdccautodl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmXdccautodl.getContentPane().setLayout(null);
 		
@@ -166,6 +168,21 @@ public class WindowMain {
 		
 		scrollPane_2.setViewportView(panel_3);
 		panel_3.setLayout(null);
+		
+		JToggleButton tglbtnUseXdccjsrequired = new JToggleButton("Use xdccJS (required on Windows)");
+		tglbtnUseXdccjsrequired.setHorizontalAlignment(SwingConstants.LEFT);
+		tglbtnUseXdccjsrequired.setFont(new Font("Verdana", Font.PLAIN, 13));
+		tglbtnUseXdccjsrequired.setBounds(12, 485, 320, 36);
+		tglbtnUseXdccjsrequired.setSelected(XDCCDL.getInstance().optionManager.getBoolean("Use-xdccJS"));
+		tglbtnUseXdccjsrequired.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				XDCCDL.getInstance().optionManager.setOptionValue("Use-xdccJS", tglbtnUseXdccjsrequired.isSelected());
+				XDCCDL.getInstance().optionManager.saveOptions();
+			}
+		});
+		frmXdccautodl.getContentPane().add(tglbtnUseXdccjsrequired);
 		loadDownloadAbles();
 		loadServers();
 	}

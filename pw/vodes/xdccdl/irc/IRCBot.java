@@ -27,11 +27,13 @@ public class IRCBot extends PircBot {
 	
 	private Server serv;
 	private int lastNumber = -1;
+	private String name;
 	
 	public IRCBot(Server serv) {
-		this.setName("XDL-" + new Random().nextInt(9999999));
-		this.setLogin("XDCC-DL by Vodes");
-		this.setVersion("XDCC-DL by Vodes");
+		name = XDCCDL.getInstance().getRandomName(false);
+		this.setName(name);
+		this.setLogin(name.split("-")[0]);
+		this.setVersion(name.split("-")[0]);
 		this.setDccInetAddress(XDCCDL.getInstance().inet);
 		this.serv = serv;
 	}

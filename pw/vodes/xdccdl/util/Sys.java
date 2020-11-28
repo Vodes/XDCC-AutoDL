@@ -1,7 +1,13 @@
 package pw.vodes.xdccdl.util;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import pw.vodes.xdccdl.XDCCDL;
 
@@ -37,6 +43,26 @@ public class Sys {
 	
 	public static void out(String message) {
 		out(message, "info", true);
+	}
+	
+	public static List<String> readWordlist(String url) {
+		final List<String> lines = new ArrayList<String>();
+		try {
+			URL website = new URL(url);
+			URLConnection connection = website.openConnection();
+			connection.setRequestProperty("User-Agent","Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.7; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+			String str;
+			while ((str = in.readLine()) != null) {
+				if (!str.startsWith("#") && !str.startsWith("//") && str.length() < 7) {
+					lines.add(str);
+				}
+			}
+			in.close();
+		} catch (Exception e) {
+			//ignore
+		}
+		return lines;
 	}
 
 }

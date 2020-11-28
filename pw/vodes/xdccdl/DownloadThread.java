@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import pw.vodes.xdccdl.option.OptionManager;
 import pw.vodes.xdccdl.util.CommandLineUtil;
 import pw.vodes.xdccdl.util.OS;
 import pw.vodes.xdccdl.util.Sys;
@@ -25,9 +26,18 @@ public class DownloadThread extends Thread {
 		String command = String.format("xdcc --server %s --channel %s --nickname %s %s send %s",
 				server,
 				"'" + (channel.startsWith("#") ? channel : "#" + channel) + "'",
-				"XdlClient-" + new Random().nextInt(99999),
-				"'" + botname + "'",
+				"\"" + XDCCDL.getInstance().getRandomName(true) + "\"",
+				"\"" + botname + "\"",
 				"'" + pack + "'");
+		if(XDCCDL.getInstance().optionManager.getBoolean("Use-xdccJS")) {
+			command = String.format("xdccJS -q --host %s --bot %s --download %s --nickname %s --chan %s --path %s --no-randomize"
+					, "" + server + "",
+					"\"" + botname + "\"",
+					"" + pack,
+					"\"" + XDCCDL.getInstance().getRandomName(true) + "\"",
+					"\"" + (channel.startsWith("#") ? channel : "#" + channel) + "\"",
+					"\"" + downloadPath + "\"");
+		}
 		Sys.out(command);
 		try {
 			ArrayList<String> commands = new ArrayList<>();
