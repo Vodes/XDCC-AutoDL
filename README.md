@@ -3,8 +3,9 @@
 Automatically downloads xdcc files with selected criteria
 
 ## Important Stuff:
-- It uses the pip package [xdcc](https://pypi.org/project/xdcc/) so you'll need that and obviously python3
-- xdcc might not work on windows although it might just be my broken python install on windows 
+You'll need:
+- This pip package on linux: [xdcc](https://pypi.org/project/xdcc/)
+- This npm package on windows: [xdccjs](https://npm.io/package/xdccjs)
 
 ## Used Libraries:
 - [PircBot](http://www.jibble.org/pircbot.php)
