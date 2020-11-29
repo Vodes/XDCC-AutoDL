@@ -4,7 +4,7 @@ Automatically downloads xdcc files with selected criteria
 
 ## Important Stuff:
 You'll need:
-- This pip package on linux: [xdcc](https://pypi.org/project/xdcc/)
+- This pip package on linux: [xdcc](https://pypi.org/project/xdcc/) (install with _**pip install xdcc**_)
 - This npm package on windows: [xdccjs](https://npm.io/package/xdccjs) (install with _**npm install xdccjs -g**_)
 
 ## Used Libraries:
