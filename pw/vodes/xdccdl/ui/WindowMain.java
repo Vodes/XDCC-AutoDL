@@ -3,11 +3,14 @@ package pw.vodes.xdccdl.ui;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -74,6 +77,7 @@ public class WindowMain {
 		frmXdccautodl.setResizable(false);
 		frmXdccautodl.setBounds(100, 100, 450, 550);
 		frmXdccautodl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmXdccautodl.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("xdccdl.png")));
 		frmXdccautodl.getContentPane().setLayout(null);
 		
 		JSeparator separator = new JSeparator();
@@ -229,6 +233,16 @@ public class WindowMain {
 		panel_3.repaint();
 		scrollPane_2.repaint();
 		scrollPane_2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	}
+	
+	public void updateLog() {
+		if(XDCCDL.getInstance() != null && XDCCDL.getInstance().window != null && XDCCDL.getInstance().window.textPane != null) {
+			XDCCDL.getInstance().window.textPane.setText("");
+			for(String s : XDCCDL.getInstance().logs) {
+				XDCCDL.getInstance().window.textPane.setText(XDCCDL.getInstance().window.textPane.getText() + s + "\n");
+				XDCCDL.getInstance().window.textPane.setCaretPosition(XDCCDL.getInstance().window.textPane.getDocument().getLength() - 1);
+			}
+		}
 	}
 	
 	public void loadDownloadAbles() {

@@ -41,6 +41,7 @@ public class ServerManager {
 	
 	private void addDefault() {
 		getServers().add(new Server("Rizon - HorribleSubs", "irc.rizon.net", "#HorribleSubs", true));
+		save();
 	}
 	
 	public void save() {

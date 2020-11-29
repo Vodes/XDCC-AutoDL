@@ -22,6 +22,10 @@ public class DownloadAbleManager {
 			return;
 		}
 		List<String> fileReadout = FileUtil.readFileToLines(downloadableFile);
+		if(fileReadout.isEmpty()) {
+			addSample();
+			return;
+		}
 		for(String s : fileReadout) {
 			if(!s.contains(";;")) {
 				continue;
@@ -29,6 +33,11 @@ public class DownloadAbleManager {
 			String[] parts = s.split(";;");
 			downloadables.add(new DownloadAble(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[3])));
 		}
+	}
+	
+	public void addSample() {
+		downloadables.add(new DownloadAble("SampleDLAble", "SampleBot", "SampleAnime, (1080p)", true));
+		save();
 	}
 	
 	public void save() {

@@ -1,5 +1,7 @@
 package pw.vodes.xdccdl;
 
+import java.awt.Desktop;
+import java.awt.TrayIcon;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -19,6 +21,7 @@ import pw.vodes.xdccdl.option.types.OptionBoolean;
 import pw.vodes.xdccdl.option.types.OptionString;
 import pw.vodes.xdccdl.server.Server;
 import pw.vodes.xdccdl.server.ServerManager;
+import pw.vodes.xdccdl.ui.TrayIconUtil;
 import pw.vodes.xdccdl.ui.WindowMain;
 import pw.vodes.xdccdl.util.Sys;
 import pw.vodes.xdccdl.util.VersionChecker;
@@ -44,7 +47,9 @@ public class XDCCDL {
 	public InetAddress inet;
 	public IrcCheckerThread ircCheck;
 	public List<String> wordlist = new ArrayList<String>();
-	public final double version = 1.4;
+	public List<String> logs = new ArrayList<String>();
+	public TrayIcon tray;
+	public final double version = 1.5;
 	
 	public void init() {
 		directory = new File(System.getProperty("user.home"), "Vodes" + File.separator + "XDCC-DL");
@@ -58,9 +63,16 @@ public class XDCCDL {
 		dlaManager.init();
 		serverManager = new ServerManager();
 		serverManager.init();
-		window = new WindowMain();
-		window.frmXdccautodl.setVisible(true);
-		window.frmXdccautodl.toFront();
+		if(Desktop.isDesktopSupported()) {
+			window = new WindowMain();
+			window.frmXdccautodl.setVisible(true);
+			window.frmXdccautodl.toFront();
+			window.updateLog();
+			tray = new TrayIconUtil().create();
+		} else {
+			Sys.out("Launching in CLI Mode");
+			Sys.out("Check Configuration at " + directory.getAbsolutePath());
+		}
 		VersionChecker.checkVersion();
 		Sys.out("Getting wordlist...");
 		Sys.out("(It might take some time)");
@@ -69,7 +81,6 @@ public class XDCCDL {
 		for(Server serv: serverManager.getServers()) {
 			new IrcStartThread(serv).start();
 		}
-		
 		ircCheck = new IrcCheckerThread();
 		ircCheck.start();
 	}
@@ -86,7 +97,7 @@ public class XDCCDL {
 			String word2 = wordlist.get(r.nextInt(wordlist.size())).trim();
 			word1 = word1.substring(0, 1).toUpperCase() + word1.substring(1).toLowerCase();
 			word2 = word2.substring(0, 1).toUpperCase() + word2.substring(1).toLowerCase();
-			return word1 + word2 + "-" + r.nextInt(9999);
+			return word1 + word2 + r.nextInt(9999);
 		} else {
 			return client ? "XdlClient-" + r.nextInt(99999) : "XDL-" + r.nextInt(9999999);
 		}
