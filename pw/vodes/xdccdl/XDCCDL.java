@@ -49,7 +49,7 @@ public class XDCCDL {
 	public List<String> wordlist = new ArrayList<String>();
 	public List<String> logs = new ArrayList<String>();
 	public TrayIcon tray;
-	public final double version = 1.5;
+	public final double version = 1.51;
 	
 	public void init() {
 		directory = new File(System.getProperty("user.home"), "Vodes" + File.separator + "XDCC-DL");

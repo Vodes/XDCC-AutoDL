@@ -176,7 +176,7 @@ public class WindowMain {
 		JToggleButton tglbtnUseXdccjsrequired = new JToggleButton("Use xdccJS (required on Windows)");
 		tglbtnUseXdccjsrequired.setHorizontalAlignment(SwingConstants.LEFT);
 		tglbtnUseXdccjsrequired.setFont(new Font("Verdana", Font.PLAIN, 13));
-		tglbtnUseXdccjsrequired.setBounds(12, 485, 320, 36);
+		tglbtnUseXdccjsrequired.setBounds(6, 485, 322, 36);
 		tglbtnUseXdccjsrequired.setSelected(XDCCDL.getInstance().optionManager.getBoolean("Use-xdccJS"));
 		tglbtnUseXdccjsrequired.addChangeListener(new ChangeListener() {
 			
