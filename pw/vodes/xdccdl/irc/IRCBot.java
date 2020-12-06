@@ -74,9 +74,14 @@ public class IRCBot extends PircBot {
 	protected void onConnect() {
 		Sys.out("IRC-Bot (" + serv.getName() + ") connected!");
 		super.onConnect();
-		for(String channel : serv.getChannels().split(",")) {
-			this.joinChannel(channel);
+		if(serv.getChannels().contains(",")) {
+			for(String channel : serv.getChannels().split(",")) {
+				this.joinChannel(channel);
+			}
+		} else {
+			this.joinChannel(serv.getChannels());
 		}
+
 	}
 	
 	@Override
@@ -142,8 +147,8 @@ public class IRCBot extends PircBot {
 
 	private String containsAllNeededStrings(String s, String[] needed) {
 		for (String need : needed) {
-			if (!StringUtils.containsIgnoreCase(s, need)) {
-				return need;
+			if (!StringUtils.containsIgnoreCase(s, need.trim())) {
+				return need.trim();
 			}
 		}
 		return "";

@@ -59,12 +59,9 @@ public class ServerManager {
 	}
 	
 	public void addServer(Server serv) {
-		if(getServers().isEmpty()) {
-			this.getServers().add(serv);
-			this.save();
-			new IrcStartThread(serv).start();
-		}
-
+		this.getServers().add(serv);
+		this.save();
+		new IrcStartThread(serv).start();
 	}
 	
 	public void replaceServer(Server toReplace, Server replacement) {

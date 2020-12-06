@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -125,10 +126,10 @@ public class WindowMain {
 		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		textField_1.setText(XDCCDL.getInstance().optionManager.getString("Download-Path"));
-		textField_1.setBounds(12, 461, 345, 23);
+		textField_1.setBounds(12, 461, 334, 23);
 		frmXdccautodl.getContentPane().add(textField_1);
 		
-		JButton btnSel_1 = new JButton("Sel");
+		JButton btnSel_1 = new JButton("Select");
 		btnSel_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser f = new JFileChooser();
@@ -139,7 +140,7 @@ public class WindowMain {
 			}
 		});
 		btnSel_1.setFont(new Font("Verdana", Font.PLAIN, 12));
-		btnSel_1.setBounds(370, 461, 64, 23);
+		btnSel_1.setBounds(352, 461, 82, 23);
 		btnSel_1.setFocusable(false);
 		frmXdccautodl.getContentPane().add(btnSel_1);
 		
@@ -173,10 +174,11 @@ public class WindowMain {
 		scrollPane_2.setViewportView(panel_3);
 		panel_3.setLayout(null);
 		
-		JToggleButton tglbtnUseXdccjsrequired = new JToggleButton("Use xdccJS (required on Windows)");
+		JCheckBox tglbtnUseXdccjsrequired = new JCheckBox("Use xdccJS (required on Windows)");
+		tglbtnUseXdccjsrequired.setVerticalAlignment(SwingConstants.TOP);
 		tglbtnUseXdccjsrequired.setHorizontalAlignment(SwingConstants.LEFT);
 		tglbtnUseXdccjsrequired.setFont(new Font("Verdana", Font.PLAIN, 13));
-		tglbtnUseXdccjsrequired.setBounds(6, 485, 322, 36);
+		tglbtnUseXdccjsrequired.setBounds(6, 491, 322, 30);
 		tglbtnUseXdccjsrequired.setSelected(XDCCDL.getInstance().optionManager.getBoolean("Use-xdccJS"));
 		tglbtnUseXdccjsrequired.addChangeListener(new ChangeListener() {
 			

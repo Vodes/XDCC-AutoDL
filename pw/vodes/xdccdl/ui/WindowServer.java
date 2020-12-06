@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import pw.vodes.xdccdl.XDCCDL;
 import pw.vodes.xdccdl.download.DownloadAble;
 import pw.vodes.xdccdl.server.Server;
+import pw.vodes.xdccdl.util.Sys;
 
 public class WindowServer {
 
@@ -112,10 +113,11 @@ public class WindowServer {
 				if(textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty()) {
 					return;
 				}
+				Server toAdd = new Server(textField.getText(), textField_1.getText(), textField_2.getText(), true);
 				if(serv != null) {
-					XDCCDL.getInstance().serverManager.replaceServer(serv, new Server(textField.getText(), textField_1.getText(), textField_2.getText(), true));
+					XDCCDL.getInstance().serverManager.replaceServer(serv, toAdd);
 				} else {
-					XDCCDL.getInstance().serverManager.addServer(new Server(textField.getText(), textField_1.getText(), textField_2.getText(), true));
+					XDCCDL.getInstance().serverManager.addServer(toAdd);
 				}
 				frame.dispose();
 				XDCCDL.getInstance().window.loadServers();
