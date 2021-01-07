@@ -48,14 +48,18 @@ public class XDCCDL {
 	public IrcCheckerThread ircCheck;
 	public List<String> wordlist = new ArrayList<String>();
 	public List<String> logs = new ArrayList<String>();
+	public DownloadThreadQueue threadQueue = new DownloadThreadQueue();
 	public TrayIcon tray;
-	public final double version = 1.6;
+	public String defaultDownloadPath;
+	public final double version = 1.7;
 	
 	public void init() {
 		directory = new File(System.getProperty("user.home"), "Vodes" + File.separator + "XDCC-DL");
-		if(!directory.exists()) {
-			directory.mkdirs();
-		}
+		File defaultDlDir = new File(directory.getAbsolutePath(), "Downloads");
+		defaultDlDir.mkdirs();
+		defaultDownloadPath = defaultDlDir.getAbsolutePath();
+
+		threadQueue.start();
 		optionManager = new OptionManager();
 		addOptions();
 		optionManager.loadOptions();
@@ -86,7 +90,6 @@ public class XDCCDL {
 	}
 	
 	private void addOptions() {
-		XDCCDL.getInstance().optionManager.options.add(new OptionString("Download-Path", "Please choose a path."));
 		XDCCDL.getInstance().optionManager.options.add(new OptionBoolean("Use-xdccJS", false));
 	}
 	

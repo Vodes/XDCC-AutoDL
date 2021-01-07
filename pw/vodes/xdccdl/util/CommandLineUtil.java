@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import org.apache.commons.lang3.SystemUtils;
 
 import pw.vodes.xdccdl.XDCCDL;
+import pw.vodes.xdccdl.download.DownloadAble;
 
 public class CommandLineUtil {
 
-	public static void runCommand(ArrayList<String> commands) {
+	public static void runCommand(ArrayList<String> commands, DownloadAble dla) {
 		Process process;
 		ArrayList<String> commandList = new ArrayList<>();
 		if (getOS() == OS.Windows) {
@@ -28,7 +29,7 @@ public class CommandLineUtil {
 		} else {
 			return;
 		}
-		ProcessBuilder processbuilder = new ProcessBuilder(commandList).directory(new File(XDCCDL.getInstance().optionManager.getString("Download-Path")));
+		ProcessBuilder processbuilder = new ProcessBuilder(commandList).directory(new File(dla.getDownloadDir()));
 		Process p;
 		try {
 			p = processbuilder.start();

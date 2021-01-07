@@ -54,12 +54,13 @@ public class IRCBot extends PircBot {
 	
 	private void messageResponse(ComboEvent event) {
 		if (isFromBot(event) && isXDCCNotification(event) && serv.isEnabled()) {
-			if (isWantedXDCC(event)) {
+			DownloadAble dla = isWantedXDCC(event);
+			if (dla != null) {
 				String afterMSG = event.getMessage().split("(?i)/msg")[1];
 				String afterSend = afterMSG.split("(?i)xdcc send")[1].trim();
 				String xdccNumber = afterSend.replaceAll("\\D+", "");
 				Sys.out("Valid XDCC on '" + serv.getName() + "' in '" + event.getChannel() + "' detected.");
-				new DownloadThread(event.getUser(), xdccNumber, event.getChannel(), serv.getIp()).start();
+				XDCCDL.getInstance().threadQueue.queue.add(new DownloadThread(event.getUser(), xdccNumber, event.getChannel(), serv.getIp(), dla));
 			}
 		}
 	}
@@ -128,21 +129,21 @@ public class IRCBot extends PircBot {
 	}
 	
 
-	private boolean isWantedXDCC(ComboEvent event) {
+	private DownloadAble isWantedXDCC(ComboEvent event) {
 		if (XDCCDL.getInstance().dlaManager.getDownloadables().isEmpty()) {
-			return false;
+			return null;
 		}
 		String uncontained = "";
 		for (DownloadAble dla : XDCCDL.getInstance().dlaManager.getDownloadables()) {
 			if (dla.isEnabled()) {
 				String containment = containsAllNeededStrings(event.getMessage(), dla.getContainments().split(","));
 				if (containment == "" && event.getUser().trim().equalsIgnoreCase(dla.getBot().trim())) {
-					return true;
+					return dla;
 				}
 			}
 
 		}
-		return false;
+		return null;
 	}
 
 	private String containsAllNeededStrings(String s, String[] needed) {

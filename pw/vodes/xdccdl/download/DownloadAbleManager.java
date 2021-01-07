@@ -31,19 +31,20 @@ public class DownloadAbleManager {
 				continue;
 			}
 			String[] parts = s.split(";;");
-			downloadables.add(new DownloadAble(parts[0], parts[1], parts[2], Boolean.parseBoolean(parts[3])));
+
+			downloadables.add(new DownloadAble(parts[0], parts[1], parts[2], parts.length > 4 ? parts[4] : XDCCDL.getInstance().defaultDownloadPath, Boolean.parseBoolean(parts[3])));
 		}
 	}
 	
 	public void addSample() {
-		downloadables.add(new DownloadAble("SampleDLAble", "SampleBot", "SampleAnime, (1080p)", true));
+		downloadables.add(new DownloadAble("SampleDLAble", "SampleBot", "SampleAnime, (1080p)", XDCCDL.getInstance().defaultDownloadPath, true));
 		save();
 	}
 	
 	public void save() {
 		List<String> lines = new ArrayList<>();
 		for(DownloadAble dla : getDownloadables()) {
-			lines.add(dla.getName() + ";;" + dla.getBot() + ";;" + dla.getContainments() + ";;" + dla.isEnabled());
+			lines.add(dla.getName() + ";;" + dla.getBot() + ";;" + dla.getContainments() + ";;" + dla.isEnabled() + ";;" + dla.getDownloadDir());
 		}
 		if(!lines.isEmpty()) {
 			FileUtil.writeLinesToFile(downloadableFile, lines, false);

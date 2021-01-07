@@ -35,7 +35,6 @@ import pw.vodes.xdccdl.server.Server;
 public class WindowMain {
 
 	public JFrame frmXdccautodl;
-	private JTextField textField_1;
 	public JTextPane textPane = new JTextPane();
 	
 	//Download Panel
@@ -76,7 +75,7 @@ public class WindowMain {
 		frmXdccautodl = new JFrame();
 		frmXdccautodl.setTitle("XDCC-AutoDL v" + XDCCDL.getInstance().version);
 		frmXdccautodl.setResizable(false);
-		frmXdccautodl.setBounds(100, 100, 450, 550);
+		frmXdccautodl.setBounds(100, 100, 450, 500);
 		frmXdccautodl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmXdccautodl.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("xdccdl.png")));
 		frmXdccautodl.getContentPane().setLayout(null);
@@ -116,34 +115,6 @@ public class WindowMain {
 		});
 		frmXdccautodl.getContentPane().add(btnAddNew);
 		
-		JLabel lblDownloadPath = new JLabel("Download Path");
-		lblDownloadPath.setFont(new Font("Verdana", Font.PLAIN, 11));
-		lblDownloadPath.setBounds(12, 435, 188, 20);
-		frmXdccautodl.getContentPane().add(lblDownloadPath);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Verdana", Font.PLAIN, 11));
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		textField_1.setText(XDCCDL.getInstance().optionManager.getString("Download-Path"));
-		textField_1.setBounds(12, 461, 334, 23);
-		frmXdccautodl.getContentPane().add(textField_1);
-		
-		JButton btnSel_1 = new JButton("Select");
-		btnSel_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser f = new JFileChooser();
-				f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				f.showSaveDialog(null);
-				textField_1.setText(f.getSelectedFile().getAbsolutePath());
-				XDCCDL.getInstance().optionManager.setOptionValue("Download-Path", f.getSelectedFile().getAbsolutePath());
-			}
-		});
-		btnSel_1.setFont(new Font("Verdana", Font.PLAIN, 12));
-		btnSel_1.setBounds(352, 461, 82, 23);
-		btnSel_1.setFocusable(false);
-		frmXdccautodl.getContentPane().add(btnSel_1);
-		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 299, 422, 124);
 		frmXdccautodl.getContentPane().add(scrollPane_1);
@@ -178,7 +149,7 @@ public class WindowMain {
 		tglbtnUseXdccjsrequired.setVerticalAlignment(SwingConstants.TOP);
 		tglbtnUseXdccjsrequired.setHorizontalAlignment(SwingConstants.LEFT);
 		tglbtnUseXdccjsrequired.setFont(new Font("Verdana", Font.PLAIN, 13));
-		tglbtnUseXdccjsrequired.setBounds(6, 491, 322, 30);
+		tglbtnUseXdccjsrequired.setBounds(0, 435, 322, 30);
 		tglbtnUseXdccjsrequired.setSelected(XDCCDL.getInstance().optionManager.getBoolean("Use-xdccJS"));
 		tglbtnUseXdccjsrequired.addChangeListener(new ChangeListener() {
 			

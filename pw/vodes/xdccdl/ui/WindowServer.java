@@ -58,7 +58,7 @@ public class WindowServer {
 		frame.setAlwaysOnTop(true);
 		frame.setResizable(false);
 		frame.setTitle(serv == null ? "Creating new Server" : "Editing: " + serv.getName());
-		frame.setBounds(100, 100, 350, 258);
+		frame.setBounds(100, 100, 352, 261);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
