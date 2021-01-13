@@ -110,7 +110,6 @@ public class WindowMain {
 					win.frame.setBounds(XDCCDL.getInstance().window.frmXdccautodl.getX(), XDCCDL.getInstance().window.frmXdccautodl.getY(), win.frame.getWidth(), win.frame.getHeight());
 					win.frame.setVisible(true);
 				}
-
 			}
 		});
 		frmXdccautodl.getContentPane().add(btnAddNew);
@@ -121,7 +120,7 @@ public class WindowMain {
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane_1.setViewportView(textPane);
 		
-		textPane.setFont(new Font("Verdana", Font.PLAIN, 11));
+		textPane.setFont(new Font("Verdana", Font.PLAIN, 10));
 		textPane.setEditable(false);
 		
 		JPanel panel_1 = new JPanel();

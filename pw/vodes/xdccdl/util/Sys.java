@@ -13,7 +13,7 @@ import pw.vodes.xdccdl.XDCCDL;
 
 public class Sys {
 	
-	private static String debug = "[INFO] ";
+	private static String debug = "";
 	private static String error = "[ERROR] ";
 	private static String warn = "[WARN] ";
 	

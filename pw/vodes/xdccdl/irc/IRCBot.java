@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.util.Random;
 
@@ -92,8 +94,11 @@ public class IRCBot extends PircBot {
 
 	@Override
 	protected void onIncomingFileTransfer(DccFileTransfer transfer) {
-		if(isWantedXDCC(transfer.getFile().getName(), transfer.getNick()) != null){
+		DownloadAble dla = isWantedXDCC(transfer.getFile().getName(), transfer.getNick());
+		if(dla != null){
+			Sys.out("Started: " + transfer.getFile().getName());
 			transfer.receive(transfer.getFile(), true);
+			new ProgressThread(transfer, dla).start();
 		}
 		super.onIncomingFileTransfer(transfer);
 	}
@@ -102,13 +107,13 @@ public class IRCBot extends PircBot {
 	protected void onFileTransferFinished(DccFileTransfer transfer, Exception e) {
 		if(e != null) {
 			e.printStackTrace();
-			Sys.out("Download for '" + transfer.getFile().getName() + "' has failed.", "error");
+			Sys.out("'" + transfer.getFile().getName() + "' has failed.", "error");
 			File downloadedFile = new File(XDCCDL.getInstance().directory, transfer.getFile().getName());
 			if(downloadedFile.exists()) {
 				downloadedFile.delete();
 			}
 		} else {
-			Sys.out("Download for '" + transfer.getFile().getName() + "' has finished.");
+			Sys.out("'" + transfer.getFile().getName() + "' has finished.");
 			File downloadedFile = transfer.getFile();
 			if(downloadedFile.exists()) {
 				try {
@@ -116,10 +121,10 @@ public class IRCBot extends PircBot {
 					if(dla != null){
 						File downloadDir = new File(dla.getDownloadDir());
 						downloadDir.mkdirs();
-						Files.move(downloadedFile.toPath(), new File(downloadDir, transfer.getFile().getName()).toPath());
+						Files.move(downloadedFile.toPath(), new File(downloadDir, transfer.getFile().getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
 						Sys.out("Moved file!");
 					} else {
-						Files.move(downloadedFile.toPath(), new File(XDCCDL.getInstance().defaultDownloadPath, transfer.getFile().getName()).toPath());
+						Files.move(downloadedFile.toPath(), new File(XDCCDL.getInstance().defaultDownloadPath, transfer.getFile().getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
 						Sys.out("Moved file to default path!", "warn");
 					}
 				} catch (IOException e1) {
@@ -218,5 +223,29 @@ public class IRCBot extends PircBot {
 		}
 		connection.close();
 		return "127.0.0.1";
+	}
+
+	private class ProgressThread extends Thread {
+
+		DccFileTransfer transfer;
+		DownloadAble dla;
+
+		public ProgressThread(DccFileTransfer transfer, DownloadAble dla){
+			this.transfer = transfer;
+			this.dla = dla;
+		}
+
+		@Override
+		public void run() {
+			while(!transfer.isDone){
+				System.out.println("DL '" + transfer.getFile().getName() + "': " + (int)transfer.getProgressPercentage() + "%");
+				try {
+					sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			super.run();
+		}
 	}
 }
