@@ -3,7 +3,7 @@
 Automatically downloads xdcc files with selected criteria
 
 ## Used Libraries:
-- [PircBot](http://www.jibble.org/pircbot.php)
+- [My PircBot fork](https://github.com/Vodes/PircBot)
 - [Material-UI-Swing](https://github.com/vincenzopalazzo/material-ui-swing)
 - Apache Commons (Codec, io, lang3)
 
