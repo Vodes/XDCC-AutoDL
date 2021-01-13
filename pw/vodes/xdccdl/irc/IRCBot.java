@@ -153,7 +153,7 @@ public class IRCBot extends PircBot {
 		String uncontained = "";
 		for (DownloadAble dla : XDCCDL.getInstance().dlaManager.getDownloadables()) {
 			if (dla.isEnabled()) {
-				String containment = containsAllNeededStrings(message, dla.getContainments().split(","));
+				String containment = containsAllNeededStrings(message, dla.getContainments());
 				if(user.isEmpty()){
 					if(containment == ""){
 						return dla;
@@ -170,10 +170,16 @@ public class IRCBot extends PircBot {
 		return null;
 	}
 
-	private String containsAllNeededStrings(String s, String[] needed) {
-		for (String need : needed) {
-			if (!StringUtils.containsIgnoreCase(s, need.trim())) {
-				return need.trim();
+	private String containsAllNeededStrings(String s, String needed) {
+		if(needed.contains(",")){
+			for (String need : needed.split(",")) {
+				if (!StringUtils.containsIgnoreCase(s, need.trim())) {
+					return need.trim();
+				}
+			}
+		} else {
+			if (!StringUtils.containsIgnoreCase(s, needed.trim())) {
+				return needed.trim();
 			}
 		}
 		return "";
