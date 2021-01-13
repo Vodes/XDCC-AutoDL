@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import org.pircbotx.PircBotX;
-import org.pircbotx.exception.IrcException;
-
 import pw.vodes.xdccdl.XDCCDL;
 import pw.vodes.xdccdl.server.Server;
 import pw.vodes.xdccdl.util.Sys;

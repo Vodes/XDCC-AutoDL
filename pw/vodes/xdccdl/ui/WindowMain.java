@@ -75,7 +75,7 @@ public class WindowMain {
 		frmXdccautodl = new JFrame();
 		frmXdccautodl.setTitle("XDCC-AutoDL v" + XDCCDL.getInstance().version);
 		frmXdccautodl.setResizable(false);
-		frmXdccautodl.setBounds(100, 100, 450, 500);
+		frmXdccautodl.setBounds(100, 100, 450, 470);
 		frmXdccautodl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmXdccautodl.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("xdccdl.png")));
 		frmXdccautodl.getContentPane().setLayout(null);
@@ -144,22 +144,6 @@ public class WindowMain {
 		
 		scrollPane_2.setViewportView(panel_3);
 		panel_3.setLayout(null);
-		
-		JCheckBox tglbtnUseXdccjsrequired = new JCheckBox("Use xdccJS (required on Windows)");
-		tglbtnUseXdccjsrequired.setVerticalAlignment(SwingConstants.TOP);
-		tglbtnUseXdccjsrequired.setHorizontalAlignment(SwingConstants.LEFT);
-		tglbtnUseXdccjsrequired.setFont(new Font("Verdana", Font.PLAIN, 13));
-		tglbtnUseXdccjsrequired.setBounds(0, 435, 322, 30);
-		tglbtnUseXdccjsrequired.setSelected(XDCCDL.getInstance().optionManager.getBoolean("Use-xdccJS"));
-		tglbtnUseXdccjsrequired.addChangeListener(new ChangeListener() {
-			
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				XDCCDL.getInstance().optionManager.setOptionValue("Use-xdccJS", tglbtnUseXdccjsrequired.isSelected());
-				XDCCDL.getInstance().optionManager.saveOptions();
-			}
-		});
-		frmXdccautodl.getContentPane().add(tglbtnUseXdccjsrequired);
 		loadDownloadAbles();
 		loadServers();
 	}

@@ -6,16 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jibble.pircbot.DccChat;
 import org.jibble.pircbot.DccFileTransfer;
 import org.jibble.pircbot.PircBot;
-import org.pircbotx.dcc.ReceiveFileTransfer;
-import org.pircbotx.hooks.events.MessageEvent;
-
-import com.google.common.io.Files;
 
 import pw.vodes.xdccdl.DownloadThread;
 import pw.vodes.xdccdl.XDCCDL;
@@ -44,7 +42,13 @@ public class IRCBot extends PircBot {
 		messageResponse(event);
 		super.onPrivateMessage(sender, login, hostname, message);
 	}
-	
+
+	@Override
+	protected void onUnknown(String s) {
+		Sys.out(s, "error");
+		super.onUnknown(s);
+	}
+
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		ComboEvent event = new ComboEvent(sender, channel, message);
@@ -54,13 +58,14 @@ public class IRCBot extends PircBot {
 	
 	private void messageResponse(ComboEvent event) {
 		if (isFromBot(event) && isXDCCNotification(event) && serv.isEnabled()) {
-			DownloadAble dla = isWantedXDCC(event);
+			DownloadAble dla = isWantedXDCC(event.getMessage(), event.getUser());
 			if (dla != null) {
 				String afterMSG = event.getMessage().split("(?i)/msg")[1];
 				String afterSend = afterMSG.split("(?i)xdcc send")[1].trim();
 				String xdccNumber = afterSend.replaceAll("\\D+", "");
 				Sys.out("Valid XDCC on '" + serv.getName() + "' in '" + event.getChannel() + "' detected.");
-				XDCCDL.getInstance().threadQueue.queue.add(new DownloadThread(event.getUser(), xdccNumber, event.getChannel(), serv.getIp(), dla));
+				this.sendMessage(event.getUser(), "xdcc send #" + xdccNumber);
+				//XDCCDL.getInstance().threadQueue.queue.add(new DownloadThread(event.getUser(), xdccNumber, event.getChannel(), serv.getIp(), dla));
 			}
 		}
 	}
@@ -84,9 +89,12 @@ public class IRCBot extends PircBot {
 		}
 
 	}
-	
+
 	@Override
 	protected void onIncomingFileTransfer(DccFileTransfer transfer) {
+		if(isWantedXDCC(transfer.getFile().getName(), transfer.getNick()) != null){
+			transfer.receive(transfer.getFile(), true);
+		}
 		super.onIncomingFileTransfer(transfer);
 	}
 	
@@ -101,10 +109,19 @@ public class IRCBot extends PircBot {
 			}
 		} else {
 			Sys.out("Download for '" + transfer.getFile().getName() + "' has finished.");
-			File downloadedFile = new File(XDCCDL.getInstance().directory, transfer.getFile().getName());
+			File downloadedFile = transfer.getFile();
 			if(downloadedFile.exists()) {
 				try {
-					Files.move(downloadedFile, new File(XDCCDL.getInstance().optionManager.getString("Download-Path"), transfer.getFile().getName()));
+					DownloadAble dla = isWantedXDCC(transfer.getFile().getName(), "");
+					if(dla != null){
+						File downloadDir = new File(dla.getDownloadDir());
+						downloadDir.mkdirs();
+						Files.move(downloadedFile.toPath(), new File(downloadDir, transfer.getFile().getName()).toPath());
+						Sys.out("Moved file!");
+					} else {
+						Files.move(downloadedFile.toPath(), new File(XDCCDL.getInstance().defaultDownloadPath, transfer.getFile().getName()).toPath());
+						Sys.out("Moved file to default path!", "warn");
+					}
 				} catch (IOException e1) {
 					Sys.out("Moving file '" + transfer.getFile().getName() + "' has failed.", "error");
 					e1.printStackTrace();
@@ -129,17 +146,24 @@ public class IRCBot extends PircBot {
 	}
 	
 
-	private DownloadAble isWantedXDCC(ComboEvent event) {
+	private DownloadAble isWantedXDCC(String message, String user) {
 		if (XDCCDL.getInstance().dlaManager.getDownloadables().isEmpty()) {
 			return null;
 		}
 		String uncontained = "";
 		for (DownloadAble dla : XDCCDL.getInstance().dlaManager.getDownloadables()) {
 			if (dla.isEnabled()) {
-				String containment = containsAllNeededStrings(event.getMessage(), dla.getContainments().split(","));
-				if (containment == "" && event.getUser().trim().equalsIgnoreCase(dla.getBot().trim())) {
-					return dla;
+				String containment = containsAllNeededStrings(message, dla.getContainments().split(","));
+				if(user.isEmpty()){
+					if(containment == ""){
+						return dla;
+					}
+				} else {
+					if (containment == "" && user.trim().equalsIgnoreCase(dla.getBot().trim())) {
+						return dla;
+					}
 				}
+
 			}
 
 		}
