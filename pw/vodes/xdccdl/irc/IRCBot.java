@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.InetAddress;
 import java.net.URL;
 import java.nio.file.CopyOption;
@@ -12,6 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jibble.pircbot.DccChat;
 import org.jibble.pircbot.DccFileTransfer;
@@ -238,7 +241,8 @@ public class IRCBot extends PircBot {
 		@Override
 		public void run() {
 			while(!transfer.isDone){
-				System.out.println("DL '" + transfer.getFile().getName() + "': " + (int)transfer.getProgressPercentage() + "%");
+				double transferRate = transfer.getTransferRate() / (1024 * 1024);
+				System.out.println("DL '" + transfer.getFile().getName() + "': " + (int)transfer.getProgressPercentage() + "% / " + new BigDecimal(transferRate).setScale(3, RoundingMode.CEILING).doubleValue() + " MB/s");
 				try {
 					sleep(2000);
 				} catch (InterruptedException e) {

@@ -101,6 +101,7 @@ public class WindowMain {
 		btnAddNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				if(tabbedPane.getSelectedIndex() == 0) {
 					WindowDownloadAble win = new WindowDownloadAble();
 					win.frame.setBounds(XDCCDL.getInstance().window.frmXdccautodl.getX(), XDCCDL.getInstance().window.frmXdccautodl.getY(), win.frame.getWidth(), win.frame.getHeight());

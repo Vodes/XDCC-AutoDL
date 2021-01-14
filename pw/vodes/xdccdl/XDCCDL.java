@@ -51,8 +51,8 @@ public class XDCCDL {
 	public DownloadThreadQueue threadQueue = new DownloadThreadQueue();
 	public TrayIcon tray;
 	public String defaultDownloadPath;
-	public final double version = 1.9;
-	
+	public final double version = 2.0;
+
 	public void init() {
 		directory = new File(System.getProperty("user.home"), "Vodes" + File.separator + "XDCC-DL");
 		File defaultDlDir = new File(directory.getAbsolutePath(), "Downloads");
