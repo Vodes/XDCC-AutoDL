@@ -24,6 +24,7 @@ import pw.vodes.xdccdl.server.ServerManager;
 import pw.vodes.xdccdl.ui.TrayIconUtil;
 import pw.vodes.xdccdl.ui.WindowMain;
 import pw.vodes.xdccdl.util.Sys;
+import pw.vodes.xdccdl.util.ThemeUtil;
 import pw.vodes.xdccdl.util.VersionChecker;
 
 public class XDCCDL {
@@ -51,7 +52,7 @@ public class XDCCDL {
 	public DownloadThreadQueue threadQueue = new DownloadThreadQueue();
 	public TrayIcon tray;
 	public String defaultDownloadPath;
-	public final double version = 2.0;
+	public final double version = 2.1;
 
 	public void init() {
 		directory = new File(System.getProperty("user.home"), "Vodes" + File.separator + "XDCC-DL");
@@ -67,15 +68,16 @@ public class XDCCDL {
 		dlaManager.init();
 		serverManager = new ServerManager();
 		serverManager.init();
-		if(Desktop.isDesktopSupported()) {
+		if(Main.forceCLI || !Desktop.isDesktopSupported()) {
+			Sys.out("Launching in CLI Mode");
+			Sys.out("Check Configuration at " + directory.getAbsolutePath());
+		} else {
+			ThemeUtil.setTheme();
 			window = new WindowMain();
 			window.frmXdccautodl.setVisible(true);
 			window.frmXdccautodl.toFront();
 			window.updateLog();
 			tray = new TrayIconUtil().create();
-		} else {
-			Sys.out("Launching in CLI Mode");
-			Sys.out("Check Configuration at " + directory.getAbsolutePath());
 		}
 		VersionChecker.checkVersion();
 		Sys.out("Getting wordlist...");
