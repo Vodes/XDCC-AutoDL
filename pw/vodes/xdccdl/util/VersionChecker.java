@@ -9,7 +9,9 @@ public class VersionChecker {
 		if(XDCCDL.getInstance().version < onlineVersion) {
 			Sys.out("New Update available.", "WARN");
 			Sys.out("Please go to https://github.com/Vodes/XDCC-AutoDL/");
-			XDCCDL.getInstance().window.frmXdccautodl.setTitle(XDCCDL.getInstance().window.frmXdccautodl.getTitle() + " [OUTDATED]");
+			if(XDCCDL.getInstance().window != null) {
+				XDCCDL.getInstance().window.frmXdccautodl.setTitle(XDCCDL.getInstance().window.frmXdccautodl.getTitle() + " [OUTDATED]");
+			}
 		}
 	}
 
