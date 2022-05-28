@@ -63,7 +63,7 @@ public class TrayIconUtil {
 			popup.add(configItem);
 			popup.add(exitItem);
 			try {
-				TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("xdccdl.png")), "XDCC-AutoDL", popup);
+				TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("xdccdl.png")), "XDCC-AutoDL", popup);
 				trayIcon.setImageAutoSize(true);
 				trayIcon.addMouseListener(new MouseListener() {
 					

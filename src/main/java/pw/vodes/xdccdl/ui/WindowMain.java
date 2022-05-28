@@ -77,7 +77,8 @@ public class WindowMain {
 		frmXdccautodl.setResizable(false);
 		frmXdccautodl.setBounds(100, 100, 450, 470);
 		frmXdccautodl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmXdccautodl.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("xdccdl.png")));
+		frmXdccautodl.setIconImage(
+				Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("xdccdl.png")));
 		frmXdccautodl.getContentPane().setLayout(null);
 		
 		JSeparator separator = new JSeparator();
